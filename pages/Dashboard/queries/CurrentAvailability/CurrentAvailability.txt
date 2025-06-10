@@ -1,0 +1,9 @@
+SELECT 
+    i.name AS product_name,
+    i.category,
+    i.quantity AS stock_quantity,
+    i.price,
+		i.image,
+    ROUND((i.quantity * i.price)::numeric, 2) AS total_stock_value
+FROM items i
+ORDER BY i.quantity DESC;

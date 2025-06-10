@@ -108,7 +108,7 @@
   "type": "CHART_WIDGET",
   "version": 1,
   "widgetId": "td3e9pm93u",
-  "widgetName": "Chart1",
+  "widgetName": "Categories",
   "xAxisName": "Product Line",
   "yAxisName": "Revenue($)"
 }
