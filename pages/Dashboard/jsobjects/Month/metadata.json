@@ -1,0 +1,16 @@
+{
+  "gitSyncId": "68482c642f12c15d0d9bba62_1754c5ad-2c32-46c1-8fe6-dae3734cdb3e",
+  "id": "Dashboard_Month",
+  "unpublishedCollection": {
+    "name": "Month",
+    "pageId": "Dashboard",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": [
+      {
+        "name": "germanMonths",
+        "value": "{\n  0: \"Januar\",\n  1: \"Februar\",\n  2: \"März\",\n  3: \"April\",\n  4: \"Mai\",\n  5: \"Juni\",\n  6: \"Juli\",\n  7: \"August\",\n  8: \"September\",\n  9: \"Oktober\",\n  10: \"November\",\n  11: \"Dezember\"\n}"
+      }
+    ]
+  }
+}

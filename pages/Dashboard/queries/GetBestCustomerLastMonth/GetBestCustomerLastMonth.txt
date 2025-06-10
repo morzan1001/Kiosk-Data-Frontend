@@ -1,0 +1,10 @@
+SELECT 
+    u.name AS username,
+    ROUND(SUM(t.cost)::numeric, 2) AS total_spent
+FROM transactions t
+JOIN users u ON t.user_id = u.id
+WHERE t.date >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+  AND t.date < DATE_TRUNC('month', CURRENT_DATE)
+GROUP BY u.id, u.name
+ORDER BY total_spent DESC
+LIMIT 1;

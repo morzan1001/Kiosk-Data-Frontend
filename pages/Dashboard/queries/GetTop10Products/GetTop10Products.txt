@@ -1,0 +1,10 @@
+SELECT 
+    i.name AS product_name,
+    i.category,
+    COUNT(t.id) AS units_sold,
+    SUM(t.cost) AS total_revenue
+FROM transactions t
+JOIN items i ON t.item_id = i.id
+GROUP BY i.id, i.name, i.category
+ORDER BY units_sold DESC
+LIMIT 10;
