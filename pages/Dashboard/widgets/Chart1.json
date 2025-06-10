@@ -8,7 +8,7 @@
   "chartData": {
     "y8sis0bohq": {
       "data": "{{TotalNumberCategories.data.map(item => ({\n    x: item.category,\n    y: item.total_sold\n}))}}",
-      "seriesName": "2023"
+      "seriesName": "Gesamt"
     }
   },
   "chartName": "Kategorien",
