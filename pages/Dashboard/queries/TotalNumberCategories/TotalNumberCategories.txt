@@ -1,0 +1,7 @@
+SELECT 
+    i.category,
+    COUNT(t.id) AS total_sold
+FROM transactions t
+JOIN items i ON t.item_id = i.id
+GROUP BY i.category
+ORDER BY total_sold DESC;
