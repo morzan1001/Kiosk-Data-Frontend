@@ -4,7 +4,7 @@
   "borderColor": "#E0DEDE",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 28,
+  "bottomRow": 31,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "children": [
     {
@@ -82,7 +82,7 @@
   "responsiveBehavior": "fill",
   "rightColumn": 42,
   "shouldScrollContents": true,
-  "topRow": 14,
+  "topRow": 17,
   "type": "STATBOX_WIDGET",
   "widgetId": "euirsq88oy",
   "widgetName": "BestCustomerLastMonth"
