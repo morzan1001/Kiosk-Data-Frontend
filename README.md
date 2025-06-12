@@ -1,11 +1,41 @@
-![](https://raw.githubusercontent.com/appsmithorg/appsmith/release/static/appsmith_logo_primary.png)
+# Kiosk Data Frontend
 
-This app is built using Appsmith. Turn any datasource into an internal app in minutes. Appsmith lets you drag-and-drop components to build dashboards, write logic with JavaScript objects and connect to any API, database or GraphQL source.
+The [kiosk](https://github.com/morzan1001/Kiosk) is an application for managing a vending machine. Of course, this generates data. For example, which user has made the most purchases or which products are the most popular. The [appsmith](https://github.com/appsmithorg/appsmith) dashboard from this repository can be used to display this data.
 
-![](https://raw.githubusercontent.com/appsmithorg/appsmith/release/static/images/integrations.png)
+![](assets/screenshot.png)
 
-### [Github](https://github.com/appsmithorg/appsmith) • [Docs](https://docs.appsmith.com/?utm_source=github&utm_medium=social&utm_content=appsmith_docs&utm_campaign=null&utm_term=appsmith_docs) • [Community](https://community.appsmith.com/) • [Tutorials](https://github.com/appsmithorg/appsmith/tree/update/readme#tutorials) • [Youtube](https://www.youtube.com/appsmith) • [Discord](https://discord.gg/rBTTVJp)
+## Install
 
-##### You can visit the application using the below link
+To use the dashboard with Appsmith, the kiosk must be configured to use a Postgres database (or other database with TCP connection). SQLite is not supported. In my case, I use Appsmith in a Docker container and a Postgres database also in a Docker container in the same Docker network. The following Docker compose file could be used for example. Once Appsmith is running, you can simply import the dashboard from this repo and configure the database connection. 
 
-###### [![](https://assets.appsmith.com/git-sync/Buttons.svg) ](http://10.21.0.250/applications/68482c642f12c15d0d9bba62/pages/68482c652f12c15d0d9bba64) [![](https://assets.appsmith.com/git-sync/Buttons2.svg)](http://10.21.0.250/applications/68482c642f12c15d0d9bba62/pages/68482c652f12c15d0d9bba64/edit)
+```yaml
+version: "3"
+
+services:
+   appsmith:
+     image: index.docker.io/appsmith/appsmith-ce
+     container_name: appsmith
+     ports:
+         - "80:80"
+         - "443:443"
+     volumes:
+         - ./stacks:/appsmith-stacks
+     restart: unless-stopped
+     networks:
+       - kiosk
+     deploy:
+       resources:
+         limits:
+           cpus: '2.5'
+           memory: 1.5g
+         reservations:
+           cpus: '1.25'
+           memory: 750m
+
+networks:
+  kiosk:
+    external: true
+
+```
+
+A small note in passing :warning:. I use the entire kiosk on a Pi 5 with 4GB ram. The CPU performance of the Pi is not a problem, but the 4GB ram is. Appsmith is very hungry, so I have limited the resources of the container to 1.5GB. otherwise the kiosk application can become really unusable. 
