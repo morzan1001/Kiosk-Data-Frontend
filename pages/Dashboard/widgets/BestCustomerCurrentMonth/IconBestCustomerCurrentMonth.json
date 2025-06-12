@@ -14,12 +14,16 @@
       "key": "borderRadius"
     }
   ],
-  "dynamicTriggerPathList": [],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
   "iconName": "crown",
   "isDisabled": false,
   "isLoading": false,
   "isVisible": true,
-  "key": "iswslsynuh",
+  "key": "pcpi8amuvp",
   "leftColumn": 46,
   "minWidth": 50,
   "mobileBottomRow": 10,
@@ -27,13 +31,14 @@
   "mobileRightColumn": 62,
   "mobileTopRow": 2,
   "needsErrorInfo": false,
-  "parentId": "d67oksnoz8",
+  "onClick": "",
+  "parentId": "zjise8obc5",
   "renderMode": "CANVAS",
   "responsiveBehavior": "hug",
   "rightColumn": 62,
   "topRow": 2,
   "type": "ICON_BUTTON_WIDGET",
   "version": 1,
-  "widgetId": "dw59c5wcga",
-  "widgetName": "IconButton3"
+  "widgetId": "cmf5xfzhn2",
+  "widgetName": "IconBestCustomerCurrentMonth"
 }
