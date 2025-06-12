@@ -1,12 +1,12 @@
 # Kiosk Data Frontend
 
-The [kiosk](https://github.com/morzan1001/Kiosk) is an application for managing a vending machine. Of course, this generates data. For example, which user has made the most purchases or which products are the most popular. The [appsmith](https://github.com/appsmithorg/appsmith) dashboard from this repository can be used to display this data.
+The [Kiosk](https://github.com/morzan1001/Kiosk) is an application for managing a vending machine. Of course, this generates data. For example, which user has made the most purchases or which products are the most popular. The [Appsmith](https://github.com/appsmithorg/appsmith) dashboard from this repository can be used to display this data.
 
 ![](assets/screenshot.png)
 
 ## Install
 
-To use the dashboard with Appsmith, the kiosk must be configured to use a Postgres database (or other database with TCP connection). SQLite is not supported. In my case, I use Appsmith in a Docker container and a Postgres database also in a Docker container in the same Docker network. The following Docker compose file could be used for example. Once Appsmith is running, you can simply import the dashboard from this repo and configure the database connection. 
+To use the dashboard with Appsmith, the kiosk must be configured to use a Postgres database (or other database with TCP connection). [SQLite](https://sqlite.org/) is not supported. In my case, I use Appsmith in a Docker container and a [postgresql](https://www.postgresql.org/) database also in a Docker container in the same Docker network. The following Docker-Compose file could be used for example. Once Appsmith is running, you can simply import the dashboard from this repo and configure the database connection. 
 
 ```yaml
 version: "3"
