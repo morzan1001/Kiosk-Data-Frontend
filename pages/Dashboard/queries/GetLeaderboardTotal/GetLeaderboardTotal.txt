@@ -1,0 +1,7 @@
+SELECT 
+    u.name AS username,
+    ROUND(SUM(t.cost)::numeric, 2) AS total_spent
+FROM transactions t
+JOIN users u ON t.user_id = u.id
+GROUP BY u.id, u.name
+ORDER BY total_spent DESC;

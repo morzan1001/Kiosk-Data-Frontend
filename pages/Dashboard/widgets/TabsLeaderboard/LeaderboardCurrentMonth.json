@@ -1,0 +1,63 @@
+{
+  "backgroundColor": "#FFFFFF",
+  "borderColor": "#ffffffff",
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "borderWidth": "1\n",
+  "bottomRow": 41,
+  "boxShadow": "none",
+  "defaultModel": "{{{data:GetLeaderboardCurrentMonth.data}}}",
+  "dynamicBindingPathList": [
+    {
+      "key": "theme"
+    },
+    {
+      "key": "defaultModel"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onResetClick"
+    }
+  ],
+  "events": [
+    "onResetClick"
+  ],
+  "isCanvas": false,
+  "isLoading": false,
+  "isSearchWildcard": true,
+  "isVisible": true,
+  "key": "j4y3ie6hjx",
+  "leftColumn": 0,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "mobileBottomRow": 178,
+  "mobileLeftColumn": 1,
+  "mobileRightColumn": 24,
+  "mobileTopRow": 148,
+  "needsErrorInfo": false,
+  "onResetClick": "{{showAlert('Successfully reset!!', '');}}",
+  "parentColumnSpace": 20.5625,
+  "parentId": "z0a70miwqj",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 64,
+  "shouldScrollContents": true,
+  "srcDoc": {
+    "css": ".lb-root {\n  width: 100%;\n  height: 100%;\n  font-family: system-ui, sans-serif;\n  padding: 6px 0 18px 0;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  background: none;\n  border-radius: 0;\n  box-shadow: none;\n}\n\n.lb-table {\n  width: 96%;\n  border-collapse: separate;\n  border-spacing: 0 12px;\n  margin-top: 0;\n}\n\n.lb-header th {\n  text-align: left;\n  padding: 10px 18px;\n  background: #acd090;\n  color: #335c15;\n  font-size: 1.04em;\n  font-weight: 700;\n  border-radius: var(--appsmith-theme-borderRadius-M) !important;\n  border: none !important;\n}\n\n.lb-header th:first-child {\n  border-top-left-radius: var(--appsmith-theme-borderRadius-M) !important;\n}\n\n.lb-header th:last-child {\n  border-top-right-radius: var(--appsmith-theme-borderRadius-M) !important;\n}\n\n.lb-row {\n  background: #fff;\n  border-radius: var(--appsmith-theme-borderRadius-M);\n  box-shadow: 0 0 2px #dbe7c4, 0 1px 7px #e6f4dc;\n  transition: transform 0.12s, box-shadow 0.12s;\n}\n\n.lb-row:hover {\n  transform: scale(1.012);\n  box-shadow: 0 4px 18px #d7e8ae;\n}\n\n.lb-cell {\n  padding: 10px 18px;\n  font-size: 1em;\n  border: none;\n  background: none;\n  border-radius: 0;\n}\n\n.tb-rank {\n  font-weight: 700;\n  font-size: 1.11em;\n  color: #377a1f;\n}\n\n.tb-name {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n}\n\n.lb-avatar {\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  object-fit: cover;\n  box-shadow: 0 1px 4px #acd090;\n  background: #d7ebbc;\n}\n\n.lb-row.top1 {\n  background: linear-gradient(90deg, #e7f3d0 88%, #acd090 100%);\n}\n\n.lb-row.top2 {\n  background: linear-gradient(90deg, #f6f6f1 80%, #c7de9b 100%);\n}\n\n.lb-row.top3 {\n  background: linear-gradient(90deg, #f7faf3 80%, #d2e4ba 100%);\n}\n\n@media (max-width: 700px) {\n  .lb-root {\n    padding: 3px 0 6px 0;\n  }\n  .lb-table {\n    font-size: 0.96rem;\n  }\n  .lb-header th, .lb-cell {\n    padding: 7px 5px;\n  }\n}",
+    "html": "<div id=\"root\"></div>",
+    "js": "import React from \"https://cdn.jsdelivr.net/npm/react@18.2.0/+esm\";\nimport ReactDOM from \"https://cdn.jsdelivr.net/npm/react-dom@18.2.0/+esm\";\n\n// Funktion zum Generieren der DiceBear Avatar URL\nconst generateAvatar = name => {\n  return `https://api.dicebear.com/9.x/pixel-art/svg?seed=${encodeURIComponent(name)}`;\n};\nconst fallbackData = [{\n  username: \"Sophie\",\n  total_spent: 124.50\n}, {\n  username: \"Markus\",\n  total_spent: 111.20\n}, {\n  username: \"Alex\",\n  total_spent: 104.30\n}];\nfunction Leaderboard() {\n  const [leaderboard, setLeaderboard] = React.useState([]);\n  React.useEffect(() => {\n    // Zugriff auf appsmith.model.data statt appsmith.model\n    const data = appsmith.model?.data || fallbackData;\n    console.log(\"Initial data:\", data);\n    if (Array.isArray(data)) {\n      const processedData = data.map(entry => ({\n        ...entry,\n        total_spent: Number(entry.total_spent) || 0,\n        avatar: generateAvatar(entry.username)\n      }));\n      console.log(\"Processed data:\", processedData);\n      setLeaderboard(processedData);\n    }\n  }, []);\n  React.useEffect(() => {\n    if (appsmith.onModelChange) {\n      appsmith.onModelChange(model => {\n        console.log(\"Model changed:\", model);\n        const data = model?.data || fallbackData;\n        if (Array.isArray(data)) {\n          const processedData = data.map(entry => ({\n            ...entry,\n            total_spent: Number(entry.total_spent) || 0,\n            avatar: generateAvatar(entry.username)\n          }));\n          setLeaderboard(processedData);\n        }\n      });\n    }\n  }, []);\n  const sorted = React.useMemo(() => {\n    return [...leaderboard].sort((a, b) => (b.total_spent || 0) - (a.total_spent || 0));\n  }, [leaderboard]);\n  return /*#__PURE__*/React.createElement(\"div\", {\n    className: \"lb-root\"\n  }, /*#__PURE__*/React.createElement(\"table\", {\n    className: \"lb-table\"\n  }, /*#__PURE__*/React.createElement(\"thead\", null, /*#__PURE__*/React.createElement(\"tr\", {\n    className: \"lb-header\"\n  }, /*#__PURE__*/React.createElement(\"th\", {\n    style: {\n      width: '45px'\n    }\n  }, \"Rang\"), /*#__PURE__*/React.createElement(\"th\", null, \"Name\"), /*#__PURE__*/React.createElement(\"th\", {\n    style: {\n      width: '90px',\n      textAlign: 'right'\n    }\n  }, \"Ausgaben\"))), /*#__PURE__*/React.createElement(\"tbody\", null, sorted.length > 0 ? sorted.map((entry, idx) => /*#__PURE__*/React.createElement(\"tr\", {\n    className: 'lb-row ' + (idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : ''),\n    key: `${entry.username}-${idx}`\n  }, /*#__PURE__*/React.createElement(\"td\", {\n    className: \"lb-cell tb-rank\"\n  }, idx + 1), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"lb-cell tb-name\"\n  }, /*#__PURE__*/React.createElement(\"img\", {\n    className: \"lb-avatar\",\n    src: entry.avatar,\n    alt: `${entry.username} avatar`\n  }), /*#__PURE__*/React.createElement(\"span\", null, entry.username)), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"lb-cell\",\n    style: {\n      textAlign: 'right',\n      fontWeight: 600\n    }\n  }, (entry.total_spent || 0).toFixed(2), \" \\u20AC\"))) : /*#__PURE__*/React.createElement(\"tr\", null, /*#__PURE__*/React.createElement(\"td\", {\n    colSpan: \"3\",\n    style: {\n      textAlign: 'center',\n      padding: '20px'\n    }\n  }, \"Keine Daten verf\\xFCgbar\")))));\n}\nappsmith.onReady(() => {\n  ReactDOM.render(/*#__PURE__*/React.createElement(Leaderboard, null), document.getElementById(\"root\"));\n});"
+  },
+  "theme": "{{appsmith.theme}}",
+  "topRow": 0,
+  "type": "CUSTOM_WIDGET",
+  "uncompiledSrcDoc": {
+    "css": ".lb-root {\n  width: 100%;\n  height: 100%;\n  font-family: system-ui, sans-serif;\n  padding: 6px 0 18px 0;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  background: none;\n  border-radius: 0;\n  box-shadow: none;\n}\n.lb-table {\n  width: 96%;\n  border-collapse: separate;\n  border-spacing: 0 12px;\n  margin-top: 0;\n}\n.lb-header th {\n  text-align: left;\n  padding: 10px 18px;\n  background: #acd090;\n  color: #335c15;\n  font-size: 1.04em;\n  font-weight: 700;\n  border-radius: var(--appsmith-theme-borderRadius-M) !important;\n  border: none !important;\n}\n.lb-header th:first-child {\n  border-top-left-radius: var(--appsmith-theme-borderRadius-M) !important;\n}\n.lb-header th:last-child {\n  border-top-right-radius: var(--appsmith-theme-borderRadius-M) !important;\n}\n.lb-row {\n  background: #fff;\n  border-radius: var(--appsmith-theme-borderRadius-M);\n  box-shadow: 0 0 2px #dbe7c4, 0 1px 7px #e6f4dc;\n  transition: transform 0.12s, box-shadow 0.12s;\n}\n.lb-row:hover {\n  transform: scale(1.012);\n  box-shadow: 0 4px 18px #d7e8ae;\n}\n.lb-cell {\n  padding: 10px 18px;\n  font-size: 1em;\n  border: none;\n  background: none;\n  border-radius: 0;\n}\n.tb-rank {\n  font-weight: 700;\n  font-size: 1.11em;\n  color: #377a1f;\n}\n.tb-name {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n}\n.lb-avatar {\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  object-fit: cover;\n  box-shadow: 0 1px 4px #acd090;\n  background: #d7ebbc;\n}\n.lb-row.top1 {\n  background: linear-gradient(90deg, #e7f3d0 88%, #acd090 100%);\n}\n.lb-row.top2 {\n  background: linear-gradient(90deg, #f6f6f1 80%, #c7de9b 100%);\n}\n.lb-row.top3 {\n  background: linear-gradient(90deg, #f7faf3 80%, #d2e4ba 100%);\n}\n@media (max-width: 700px) {\n  .lb-root { padding: 3px 0 6px 0; }\n  .lb-table { font-size: 0.96rem; }\n  .lb-header th, .lb-cell { padding: 7px 5px; }\n}\n",
+    "html": "<div id=\"root\"></div>",
+    "js": "import React from \"https://cdn.jsdelivr.net/npm/react@18.2.0/+esm\";\nimport ReactDOM from \"https://cdn.jsdelivr.net/npm/react-dom@18.2.0/+esm\";\n\n// Funktion zum Generieren der DiceBear Avatar URL\nconst generateAvatar = (name) => {\n\treturn `https://api.dicebear.com/9.x/pixel-art/svg?seed=${encodeURIComponent(name)}`;\n};\n\nconst fallbackData = [\n\t{ username: \"Sophie\", total_spent: 124.50 },\n\t{ username: \"Markus\", total_spent: 111.20 },\n\t{ username: \"Alex\", total_spent: 104.30 },\n];\n\nfunction Leaderboard() {\n\tconst [leaderboard, setLeaderboard] = React.useState([]);\n\n\tReact.useEffect(() => {\n\t\t// Zugriff auf appsmith.model.data statt appsmith.model\n\t\tconst data = appsmith.model?.data || fallbackData;\n\t\tconsole.log(\"Initial data:\", data);\n\n\t\tif (Array.isArray(data)) {\n\t\t\tconst processedData = data.map(entry => ({ \n\t\t\t\t...entry, \n\t\t\t\ttotal_spent: Number(entry.total_spent) || 0,\n\t\t\t\tavatar: generateAvatar(entry.username) \n\t\t\t}));\n\t\t\tconsole.log(\"Processed data:\", processedData);\n\t\t\tsetLeaderboard(processedData);\n\t\t}\n\t}, []);\n\n\tReact.useEffect(() => {\n\t\tif (appsmith.onModelChange) {\n\t\t\tappsmith.onModelChange((model) => {\n\t\t\t\tconsole.log(\"Model changed:\", model);\n\n\t\t\t\tconst data = model?.data || fallbackData;\n\t\t\t\tif (Array.isArray(data)) {\n\t\t\t\t\tconst processedData = data.map(entry => ({ \n\t\t\t\t\t\t...entry, \n\t\t\t\t\t\ttotal_spent: Number(entry.total_spent) || 0,\n\t\t\t\t\t\tavatar: generateAvatar(entry.username) \n\t\t\t\t\t}));\n\t\t\t\t\tsetLeaderboard(processedData);\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t}, []);\n\n\tconst sorted = React.useMemo(() => {\n\t\treturn [...leaderboard].sort((a, b) => (b.total_spent || 0) - (a.total_spent || 0));\n\t}, [leaderboard]);\n\n\treturn (\n\t\t<div className=\"lb-root\">\n\t\t<table className=\"lb-table\">\n\t\t<thead>\n\t\t<tr className=\"lb-header\">\n\t\t<th style={{width:'45px'}}>Rang</th>\n<th>Name</th>\n<th style={{width:'90px',textAlign:'right'}}>Ausgaben</th>\n</tr>\n</thead>\n<tbody>\n\t{sorted.length > 0 ? sorted.map((entry, idx) => (\n\t\t<tr className={\n\t\t'lb-row '+\n\t\t(idx===0?'top1':(idx===1?'top2':(idx===2?'top3':'')))\n} key={`${entry.username}-${idx}`}\n            >\n              <td className=\"lb-cell tb-rank\">{idx + 1}</td>\n              <td className=\"lb-cell tb-name\">\n                <img className=\"lb-avatar\" src={entry.avatar} alt={`${entry.username} avatar`} />\n                <span>{entry.username}</span>\n              </td>\n              <td className=\"lb-cell\" style={{textAlign:'right',fontWeight:600}}>\n                {(entry.total_spent || 0).toFixed(2)} €\n              </td>\n            </tr>\n          )) : (\n            <tr>\n              <td colSpan=\"3\" style={{textAlign: 'center', padding: '20px'}}>\n                Keine Daten verfügbar\n              </td>\n            </tr>\n          )}\n        </tbody>\n      </table>\n    </div>\n  );\n}\n\nappsmith.onReady(() => {\n  ReactDOM.render(<Leaderboard />, document.getElementById(\"root\"));\n});"
+  },
+  "version": 1,
+  "widgetId": "7pr1i4928q",
+  "widgetName": "LeaderboardCurrentMonth"
+}
